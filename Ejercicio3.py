@@ -16,15 +16,29 @@ end_date=pd.to_datetime("01-01-07")
 
 mask = (df['Fecha_Alta'] > start_date) & (df['Fecha_Alta'] < end_date)
 df = df.loc[mask]
-#SET SHOW ALL DF
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_rows', None)
 
 mask=((df['Tipo']=='Parqueo') | (df['Tipo']=='Oficina'))
 df = df.loc[mask]
 
-vendedores=df
+
+vendedores=df['Vendedor'].groupby(df['Vendedor']).count().reset_index(name='Ventas_Realizadas')
 
 
 
-print(vendedores)
+#SET SHOW ALL DF
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+
+
+gra = plt.figure("Comportamiento 2005-2006")
+
+axes=plt.gca()
+#axes.set_ylim([200,200])
+Ejey = vendedores['Vendedor']
+Ejex = vendedores['Ventas_Realizadas']
+
+plt.plot(Ejey,Ejex)
+plt.show()
+
+
+
